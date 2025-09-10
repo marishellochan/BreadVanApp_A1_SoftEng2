@@ -9,10 +9,10 @@ def create_street(street_name, street_city):
     return newstreet
 
 def get_all_streets():
-    return db.session.scalars(db.select(Street)).all()
+    return Street.query.all()
 
 def get_Street(street_id):
-    return db.session.get(Street, street_id)
+    return Street.query.get(street_id)
 
 def get_all_residents_from_Street(street_id):
     street = get_Street(street_id)

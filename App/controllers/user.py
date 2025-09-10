@@ -1,6 +1,6 @@
 from App.models import User
 from App.database import db
-from App.models.user import Resident
+from App.models.user import Resident,Driver
 
 def create_user(username, password):
     newuser = User(username=username, password=password)
@@ -41,14 +41,27 @@ def create_resident(username, password, street_id):
     return newresident
 
 def get_resident(resident_id):
-    resident = db.session.execute(db.select(Resident).filter_by(resident_id=resident_id)).scalar_one_or_none()
+    resident = Resident.query.get(resident_id)
     return resident 
 
 def get_all_residents():
-    return db.session.scalars(db.select(Resident)).all()
+    return Resident.query.all()
 
 def get_residents_from_street(street_id):
-    residents = db.session.execute(db.select(Resident).filter_by(street_id=street_id)).scalars().all()
+    residents = Resident.query.filter_by(street_id=street_id).all()
     for resident in residents:
         print(resident.get_json())
     return 
+
+def get_driver(driver_id):
+    driver = Driver.query.get(driver_id)
+    return driver
+
+def get_all_drivers():
+    return Driver.query.all()
+
+def create_driver(username, password, lisence_number):
+    newdriver = User(username=username, password=password,lisence_number=lisence_number)
+    db.session.add(newdriver)
+    db.session.commit()
+    return newdrivers
