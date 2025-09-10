@@ -4,7 +4,7 @@ from flask.cli import with_appcontext, AppGroup
 from App.database import db, get_migrate
 from App.models import User
 from App.main import create_app
-from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize )
+from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize, get_all_residents_from_Street )
 
 
 # This commands file allow you to create convenient CLI commands for testing controllers
@@ -48,6 +48,8 @@ def list_user_command(format):
 
 app.cli.add_command(user_cli) # add the group to the cli
 
+
+
 '''
 Test Commands
 '''
@@ -63,6 +65,14 @@ def user_tests_command(type):
         sys.exit(pytest.main(["-k", "UserIntegrationTests"]))
     else:
         sys.exit(pytest.main(["-k", "App"]))
-    
+
+@test.command("street", help="Run Residents from Street tests")
+@click.argument("street_id", default="all")
+def residents_from_street_tests_command(street_id):
+    if street_id == "1": 
+        print(get_all_residents_from_Street(1))
+    else: 
+        print('No street with that ID')
+   
 
 app.cli.add_command(test)

@@ -2,7 +2,7 @@ from App.database import db
 
 class Inbox(db.Model):
     inbox_id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
-    resident_id = db.Column(db.Integer, db.ForeignKey('resident.id'), nullable=False)
+    resident_id = db.Column(db.Integer, db.ForeignKey('resident.user_id'), nullable=False)
 
     drives = db.relationship('Drive', secondary='driveinbox', backref=db.backref('residentinboxes', lazy=True))
 

@@ -44,6 +44,11 @@ def get_resident(resident_id):
     resident = db.session.execute(db.select(Resident).filter_by(resident_id=resident_id)).scalar_one_or_none()
     return resident 
 
+def get_all_residents():
+    return db.session.scalars(db.select(Resident)).all()
+
 def get_residents_from_street(street_id):
     residents = db.session.execute(db.select(Resident).filter_by(street_id=street_id)).scalars().all()
-    return residents
+    for resident in residents:
+        print(resident.get_json())
+    return 

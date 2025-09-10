@@ -15,7 +15,7 @@ class User(db.Model):
 
     def get_json(self):
         return{
-            'id': self.id,
+            'id': self.user_id,
             'username': self.username
         }
 
@@ -30,7 +30,6 @@ class User(db.Model):
 class Driver(User):
     __mapper_args__ = {'polymorphic_identity': 'driver'}
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), unique=True, nullable=False, primary_key=True)
-    driver_id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
     liscense_number = db.Column(db.String(20), nullable=False, unique=True)
     
     drives = db.relationship('Drive', backref='driver', lazy=True, cascade="all, delete-orphan")
@@ -48,7 +47,7 @@ class Driver(User):
 class Resident(User):
     __mapper_args__ = {'polymorphic_identity': 'resident'}
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), unique=True, nullable=False, primary_key=True)
-    resident_id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
+   # resident_id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
     street_id = db.Column(db.Integer, db.ForeignKey('street.street_id'), nullable=False) 
 
     requests = db.relationship('Request', backref='resident', lazy=True, cascade="all, delete-orphan")
@@ -56,6 +55,11 @@ class Resident(User):
     def __init__(self, username, password, street_id):
         super().__init__(username, password)
         self.street_id = street_id  
+
+    def get_json(self):
+        user_json = super().get_json()
+        user_json.update({ 'street_id' : self.street_id })
+        return user_json
 
 
 

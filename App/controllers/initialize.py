@@ -1,4 +1,4 @@
-from .user import create_user
+from .user import create_user, create_resident, get_all_residents
 from .street import *
 from App.database import db
 
@@ -16,5 +16,8 @@ def initialize():
 
     for street in get_all_streets():
         print(street.get_json())
+
+    for resident in get_all_residents():
+        print(resident.get_json())
 
 

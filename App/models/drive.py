@@ -3,7 +3,7 @@ from App.database import db
 class Drive(db.Model):
     drive_id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
     date = db.Column(db.DateTime, nullable=False)
-    driver_id = db.Column(db.Integer, db.ForeignKey('driver.driver_id'), nullable=False)
+    driver_id = db.Column(db.Integer, db.ForeignKey('driver.user_id'), nullable=False)
     street_id = db.Column(db.Integer, db.ForeignKey('street.street_id'), nullable=False)
 
     #residentinboxes = db.relationship('ResidentInbox', secondary='driveinbox', backref=db.backref('drives', lazy=True))
