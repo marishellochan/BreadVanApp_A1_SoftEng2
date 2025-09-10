@@ -1,5 +1,6 @@
 from App.models import User
 from App.database import db
+from App.models.user import Resident
 
 def create_user(username, password):
     newuser = User(username=username, password=password)
@@ -32,3 +33,17 @@ def update_user(id, username):
         db.session.commit()
         return True
     return None
+
+def create_resident(username, password, street_id):
+    newresident = Resident(username=username, password=password, street_id=street_id)
+    db.session.add(newresident)
+    db.session.commit()
+    return newresident
+
+def get_resident(resident_id):
+    resident = db.session.execute(db.select(Resident).filter_by(resident_id=resident_id)).scalar_one_or_none()
+    return resident 
+
+def get_residents_from_street(street_id):
+    residents = db.session.execute(db.select(Resident).filter_by(street_id=street_id)).scalars().all()
+    return residents

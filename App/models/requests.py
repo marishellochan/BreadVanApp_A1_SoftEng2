@@ -1,10 +1,9 @@
 from App.database import db
-from App.models.user import User
 
 class Request(db.Model):
     request_id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
     drive_id = db.Column(db.Integer, db.ForeignKey('drive.drive_id'), nullable=False)
-    username = db.Column(db.String(20), db.ForeignKey('resident.username'), nullable=False)
+    resident_id = db.Column(db.Integer, db.ForeignKey('resident.resident_id'), nullable=False)
 
 
     def __init__(self, drive_id):

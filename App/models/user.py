@@ -1,5 +1,8 @@
 from werkzeug.security import check_password_hash, generate_password_hash
 from App.database import db
+from App.models.drive import Drive
+from App.models.street import Street
+from App.models.requests import Request
 
 class User(db.Model):
     user_id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
@@ -53,4 +56,6 @@ class Resident(User):
     def __init__(self, username, password, street_id):
         super().__init__(username, password)
         self.street_id = street_id  
+
+
 
