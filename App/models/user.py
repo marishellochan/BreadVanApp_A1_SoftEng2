@@ -26,6 +26,7 @@ class User(db.Model):
     
 class Driver(User):
     __mapper_args__ = {'polymorphic_identity': 'driver'}
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), unique=True, nullable=False, primary_key=True)
     driver_id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
     liscense_number = db.Column(db.String(20), nullable=False, unique=True)
     
@@ -43,6 +44,7 @@ class Driver(User):
 
 class Resident(User):
     __mapper_args__ = {'polymorphic_identity': 'resident'}
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), unique=True, nullable=False, primary_key=True)
     resident_id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
     street_id = db.Column(db.Integer, db.ForeignKey('street.street_id'), nullable=False) 
 
