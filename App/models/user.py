@@ -25,6 +25,8 @@ class User(db.Model):
         return check_password_hash(self.password, password)
     
 class Driver(User):
+    __mapper_args__ = {'polymorphic_identity': 'driver'}
+    driver_id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
     liscense_number = db.Column(db.String(20), nullable=False, unique=True)
     
     drives = db.relationship('Drive', backref='driver', lazy=True, cascade="all, delete-orphan")
@@ -40,6 +42,7 @@ class Driver(User):
     
 
 class Resident(User):
+    __mapper_args__ = {'polymorphic_identity': 'resident'}
     resident_id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
     street_id = db.Column(db.Integer, db.ForeignKey('street.street_id'), nullable=False) 
 
