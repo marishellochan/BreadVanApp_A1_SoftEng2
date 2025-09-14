@@ -60,8 +60,8 @@ def get_driver(driver_id):
 def get_all_drivers():
     return Driver.query.all()
 
-def create_driver(username, password, lisence_number):
-    newdriver = User(username=username, password=password,lisence_number=lisence_number)
+def create_driver(username, password, license_number):
+    newdriver = Driver(username=username, password=password, license_number=license_number)
     db.session.add(newdriver)
     db.session.commit()
-    return newdrivers
+    return newdriver

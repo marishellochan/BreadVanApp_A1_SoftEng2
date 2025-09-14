@@ -10,8 +10,8 @@ def schedule_drive(driver_id, date, street_id):
     return newdrive
 
 def get_drive(drive_id):
-    return db.session.get(Drive, drive_id)
+    return Drive.query.get(drive_id)
 
 def get_all_drives_of_driver(driver_id):
-    drives = db.session.execute(db.select(Drive).filter_by(driver_id=driver_id)).scalars().all()
+    drives = Drive.query.filter_by(driver_id=driver_id).all()
     return drives

@@ -30,17 +30,17 @@ class User(db.Model):
 class Driver(User):
     __mapper_args__ = {'polymorphic_identity': 'driver'}
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), unique=True, nullable=False, primary_key=True)
-    liscense_number = db.Column(db.String(20), nullable=False, unique=True)
+    license_number = db.Column(db.String(20), nullable=False, unique=True)
     
     drives = db.relationship('Drive', backref='driver', lazy=True, cascade="all, delete-orphan")
 
-    def __init__(self, username, password, liscense_number):
+    def __init__(self, username, password, license_number):
         super().__init__(username, password)
-        self.liscense_number = liscense_number
+        self.license_number = license_number
 
     def get_json(self):
         user_json = super().get_json()
-        user_json += { 'liscense_number' : self.liscense_number}
+        user_json.update({ 'license_number' : self.license_number})
         return user_json
     
 
