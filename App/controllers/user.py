@@ -1,6 +1,7 @@
 from App.models import User
 from App.database import db
 from App.models.user import Resident,Driver
+from App.controllers.drive import schedule_drive
 
 def create_user(username, password):
     newuser = User(username=username, password=password)
@@ -40,8 +41,8 @@ def create_resident(username, password, street_id):
     db.session.commit()
     return newresident
 
-def get_resident(resident_id):
-    resident = Resident.query.get(resident_id)
+def get_resident(user_id):
+    resident = Resident.query.get(user_id)
     return resident 
 
 def get_all_residents():
@@ -53,8 +54,8 @@ def get_residents_from_street(street_id):
         print(resident.get_json())
     return 
 
-def get_driver(driver_id):
-    driver = Driver.query.get(driver_id)
+def get_driver(license_number):
+    driver = Driver.query.filter_by(license_number=license_number).first()
     return driver
 
 def get_all_drivers():
@@ -65,3 +66,9 @@ def create_driver(username, password, license_number):
     db.session.add(newdriver)
     db.session.commit()
     return newdriver
+
+def driver_schedules_drive(driver, date, street_id):
+    drive = schedule_drive(driver.license_number, date, street_id)
+    driver.drives.append(drive)
+    db.session.commit()
+    return drive

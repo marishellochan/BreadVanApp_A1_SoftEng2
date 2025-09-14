@@ -30,7 +30,7 @@ class User(db.Model):
 class Driver(User):
     __mapper_args__ = {'polymorphic_identity': 'driver'}
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), unique=True, nullable=False, primary_key=True)
-    license_number = db.Column(db.String(20), nullable=False, unique=True)
+    license_number = db.Column(db.String(20), nullable=False, unique=True, primary_key=True)
     
     drives = db.relationship('Drive', backref='driver', lazy=True, cascade="all, delete-orphan")
 
