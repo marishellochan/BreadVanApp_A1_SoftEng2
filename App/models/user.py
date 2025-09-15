@@ -3,7 +3,6 @@ from App.database import db
 from App.models.drive import Drive
 from App.models.street import Street
 from App.models.requests import Request
-from App.models.inbox import Inbox
 
 
 class User(db.Model):

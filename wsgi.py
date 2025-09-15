@@ -93,6 +93,10 @@ def schedule_drive_tests_command():
             return
         drive = driver_schedules_drive(driver, drive_date, street_id)
         print(drive.get_json())
+        print('Drive scheduled')
+        print('Scheduled drives for driver:')
+        for drive in driver.drives:
+            print(drive.get_json())
     else:
         print('No driver with that ID')
 
@@ -112,12 +116,21 @@ def view_inbox_tests_command():
                 for drive in drives:
                     print(drive.get_json())
             else:
-                print('No drives scheduled')
+                print('No drives scheduled on your street')
         else:
             print('No street with that ID')
             return    
     else:
         print('No resident with that ID')
-   
+
+# @test.command("request", help="Run request tests")
+# def send_request_tests_command():
+#     try: 
+#         resident_id = int(input("Enter resident user ID: "))
+#         resident = get_resident(resident_id)
+#     except ValueError:
+#         print("Invalid resident ID. Please enter a number.")
+#         return
+#     if resident: 
 
 app.cli.add_command(test)
