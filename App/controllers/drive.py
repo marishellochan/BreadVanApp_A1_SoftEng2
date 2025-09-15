@@ -12,7 +12,13 @@ def schedule_drive(license_number, date, street_id):
 def get_drive(drive_id):
     return Drive.query.get(drive_id)
 
-def get_all_drives_of_driver(driver_id):
+def get_all_drives_of_driver(license_number):
     drives = Drive.query.filter_by(license_number=license_number).all()
     return drives
+
+def get_all_drives():
+    return Drive.query.all()
+
+def get_Resident_drives(resident):
+    return resident.drives
 

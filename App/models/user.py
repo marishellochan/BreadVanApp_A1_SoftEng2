@@ -3,6 +3,8 @@ from App.database import db
 from App.models.drive import Drive
 from App.models.street import Street
 from App.models.requests import Request
+from App.models.inbox import Inbox
+
 
 class User(db.Model):
     user_id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
@@ -50,6 +52,7 @@ class Resident(User):
    # resident_id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
     street_id = db.Column(db.Integer, db.ForeignKey('street.street_id'), nullable=False) 
 
+    # drives = db.relationship('Drive', secondary='inbox', backref=db.backref('residents', lazy=True))
     requests = db.relationship('Request', backref='resident', lazy=True, cascade="all, delete-orphan")
 
     def __init__(self, username, password, street_id):

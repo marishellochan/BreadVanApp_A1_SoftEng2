@@ -1,6 +1,9 @@
-from .user import create_user, create_resident, get_all_residents, create_driver, get_all_drivers
+from .user import create_user, create_resident, get_all_residents, create_driver, get_all_drivers, schedule_drive
 from .street import *
+from .drive import *
 from App.database import db
+from datetime import date
+
 
 
 def initialize():
@@ -13,6 +16,7 @@ def initialize():
     db.session.add(create_driver("watson", "password", "235612" ))
     db.session.add(create_resident("shelly", "password", 1))
     db.session.add(create_resident("john", "password", 1))
+    db.session.add(schedule_drive("264721", date.fromisoformat('2024-12-01'), 1))
     db.session.commit()
 
 
@@ -24,5 +28,8 @@ def initialize():
 
     for driver in get_all_drivers():
         print(driver.get_json())
+
+    for drive in get_all_drives():
+        print(drive.get_json())
 
 

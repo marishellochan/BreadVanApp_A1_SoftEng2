@@ -4,7 +4,7 @@ from datetime import datetime
 from App.database import db, get_migrate
 from App.models import User
 from App.main import create_app
-from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize, get_all_residents_from_Street, driver_schedules_drive, get_driver )
+from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize, get_all_residents_from_Street, driver_schedules_drive, get_driver, get_resident, get_Street)
 
 
 # This commands file allow you to create convenient CLI commands for testing controllers
@@ -95,6 +95,29 @@ def schedule_drive_tests_command():
         print(drive.get_json())
     else:
         print('No driver with that ID')
+
+@test.command("view_inbox", help="Run view inbox tests")
+def view_inbox_tests_command():
+    try: 
+        user_id = input("Enter resident user ID: ")
+        resident = get_resident(user_id)
+    except ValueError:
+        print("Invalid resident ID. Please enter a number.")
+        return
+    if resident:
+        street = get_Street(resident.street_id)
+        if street: 
+            drives = street.drives 
+            if drives: 
+                for drive in drives:
+                    print(drive.get_json())
+            else:
+                print('No drives scheduled')
+        else:
+            print('No street with that ID')
+            return    
+    else:
+        print('No resident with that ID')
    
 
 app.cli.add_command(test)
