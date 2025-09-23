@@ -45,6 +45,13 @@ def get_resident(user_id):
     resident = Resident.query.get(user_id)
     return resident 
 
+def get_resident_by_username_password(username,password):
+    resident = Resident.query.filter_by(username=username).first()
+    if resident and resident.check_password(password):
+        return resident
+    else:
+        return None
+
 def get_all_residents():
     return Resident.query.all()
 
@@ -58,11 +65,18 @@ def get_driver(license_number):
     driver = Driver.query.filter_by(license_number=license_number).first()
     return driver
 
+def get_driver_by_license_password(license_number,password):
+    driver = Driver.query.filter_by(license_number=license_number).first()
+    if driver and driver.check_password(password):
+        return driver
+    else:
+        return None
+
 def get_all_drivers():
     return Driver.query.all()
 
-def create_driver(username, password, license_number):
-    newdriver = Driver(username=username, password=password, license_number=license_number)
+def create_driver(username, password, license_number, status, location):
+    newdriver = Driver(username=username, password=password, license_number=license_number, status=status, location=location)
     db.session.add(newdriver)
     db.session.commit()
     return newdriver

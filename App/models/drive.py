@@ -8,7 +8,7 @@ class Drive(db.Model):
     street_id = db.Column(db.Integer, db.ForeignKey('street.street_id'), nullable=False)
 
     #residentinboxes = db.relationship('ResidentInbox', secondary='driveinbox', backref=db.backref('drives', lazy=True))
-    
+    requests = db.relationship('Request', backref='drive', lazy=True,cascade="all, delete-orphan")
 
     def __init__(self, license_number, date, street_id):
         self.license_number = license_number

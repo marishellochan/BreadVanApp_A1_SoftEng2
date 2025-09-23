@@ -32,18 +32,35 @@ class Driver(User):
     __mapper_args__ = {'polymorphic_identity': 'driver'}
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), unique=True, nullable=False, primary_key=True)
     license_number = db.Column(db.String(20), nullable=False, unique=True, primary_key=True)
+    status = db.Column(db.String(20), nullable=True)
+    location = db.Column(db.String(20), nullable=True)
     
     drives = db.relationship('Drive', backref='driver', lazy=True, cascade="all, delete-orphan")
 
-    def __init__(self, username, password, license_number):
+    def __init__(self, username, password, license_number, status, location):
         super().__init__(username, password)
         self.license_number = license_number
+        self.status = status
+        self.location = location
 
     def get_json(self):
         user_json = super().get_json()
-        user_json.update({ 'license_number' : self.license_number})
+        user_json.update({ 'license_number' : self.license_number,
+                          'status': self.status,
+                          'location': self.location })
         return user_json
     
+    def update_status(self, status,location):
+        self.status = status
+        self.location = location 
+        db.session.commit()
+
+    def get_json_status(self):
+        return {
+            'license_number': self.license_number,
+            'status': self.status,
+            'location': self.location
+        }
 
 class Resident(User):
     __mapper_args__ = {'polymorphic_identity': 'resident'}
