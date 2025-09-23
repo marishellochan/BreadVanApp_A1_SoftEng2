@@ -20,6 +20,7 @@ def initialize():
     db.session.add(create_resident("shelly", "password", 1))
     db.session.add(create_resident("john", "password", 1))
     db.session.add(schedule_drive("264721", date.fromisoformat('2024-12-01'), 1))
+    db.session.add(schedule_drive("235612", date.fromisoformat('2024-11-15'), 2))
     db.session.commit()
 
 
