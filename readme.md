@@ -119,6 +119,43 @@ $ flask db migrate
 $ flask db upgrade
 $ flask db --help
 ```
+---
+
+### 🔹 Resident Commands
+
+Grouped under `resident`.
+
+- **View inbox (scheduled drives on resident’s street):**
+
+  ```bash
+  flask resident view_inbox
+  ```
+
+- **Send a stop request to a driver:**
+
+  ```bash
+  flask resident request
+  ```
+
+- **View driver status for a drive:**
+
+  ```bash
+  flask resident view_driver_status
+  ```
+
+---
+
+### 🔹 Driver Commands
+
+Grouped under `driver`.
+
+- **Schedule a drive:**
+
+  ```bash
+  flask driver schedule_drive
+  ```
+
+---
 
 # Testing
 
