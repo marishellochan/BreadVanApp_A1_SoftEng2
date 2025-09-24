@@ -131,7 +131,7 @@ Grouped under `resident`.
   flask resident view_inbox
   ```
 
-- **Send a stop request to a driver:**
+- **Send a stop request to a particular drive:**
 
   ```bash
   flask resident request
